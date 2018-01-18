@@ -151,7 +151,7 @@ public:
 	
 	// Get mission information.
 	const std::list<Mission> &Missions() const;
-	const std::list<Mission> &AvailableJobs() const;
+	const std::list<Mission> &AvailableJobs();
 	void AcceptJob(const Mission &mission, UI *ui);
 	// Check to see if there is any mission to offer in the spaceport right now.
 	Mission *MissionToOffer(Mission::Location location);

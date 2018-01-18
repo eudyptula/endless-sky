@@ -1117,3 +1117,8 @@ bool Mission::ParseContraband(const DataNode &node)
 	
 	return true;
 }
+
+int Mission::Payment() const
+{
+	return actions.find(COMPLETE)->second.Payment();
+}

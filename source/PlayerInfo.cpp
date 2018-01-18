@@ -1340,8 +1340,9 @@ const list<Mission> &PlayerInfo::Missions() const
 
 
 // Get the list of ordinary jobs that are available on the job board.
-const list<Mission> &PlayerInfo::AvailableJobs() const
+const list<Mission> &PlayerInfo::AvailableJobs()
 {
+	availableJobs.sort([](Mission a, Mission b){ return a.Payment() > b.Payment(); });
 	return availableJobs;
 }
 

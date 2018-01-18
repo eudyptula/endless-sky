@@ -42,7 +42,7 @@ PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 using namespace std;
 
 namespace {
-	const int SIDE_WIDTH = 280;
+	const int SIDE_WIDTH = 360;
 	
 	// Check if the mission involves the given system,
 	bool Involves(const Mission &mission, const System *system)
@@ -589,8 +589,9 @@ Point MissionPanel::DrawList(const list<Mission> &list, Point pos) const
 				highlight);
 		
 		bool canAccept = (&list == &available ? it->HasSpace(player) : IsSatisfied(*it));
-		font.Draw(it->Name(), pos,
-			(!canAccept ? dim : isSelected ? selected : unselected));
+		string item = it->Name() + (&list == &available ? " (" + to_string(it->Payment()) + " credits)" : "");
+		font.Draw(item, pos,
+				  (!canAccept ? dim : isSelected ? selected : unselected));
 	}
 	
 	return pos;
