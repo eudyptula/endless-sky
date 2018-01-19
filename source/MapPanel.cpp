@@ -141,6 +141,8 @@ void MapPanel::DrawButtons(const string &condition)
 
 void MapPanel::DrawMiniMap(const PlayerInfo &player, double alpha, const System *const jump[2], int step)
 {
+	static const string UNKNOWN_SYSTEM = "Unexplored System";
+
 	const Font &font = FontSet::Get(14);
 	Color lineColor(alpha, 0.);
 	Point center = .5 * (jump[0]->Position() + jump[1]->Position());
@@ -156,7 +158,6 @@ void MapPanel::DrawMiniMap(const PlayerInfo &player, double alpha, const System 
 	const Ship *flagship = player.Flagship();
 	for(int i = 0; i < 2; ++i)
 	{
-		static const string UNKNOWN_SYSTEM = "Unexplored System";
 		const System *system = jump[i];
 		const Government *gov = system->GetGovernment();
 		Point from = system->Position() - center + drawPos;
@@ -251,6 +252,14 @@ void MapPanel::DrawMiniMap(const PlayerInfo &player, double alpha, const System 
 	}
 	LineShader::Draw(to, to + Angle(-30.).Rotate(unit) * -10., LINK_WIDTH, bright);
 	LineShader::Draw(to, to + Angle(30.).Rotate(unit) * -10., LINK_WIDTH, bright);
+
+	const vector<const System *> &travelPlan = player.TravelPlan();
+	unsigned long size = travelPlan.size();
+	if (size > 0) {
+		const string &name = player.KnowsName(travelPlan[0]) ? travelPlan[0]->Name() : UNKNOWN_SYSTEM;
+		const string txt = "Target: " + name + " (" + to_string(size) + " remaining)";
+		font.Draw(txt, drawPos + Point(font.Width(txt)/-2, 100), lineColor);
+	}
 }
 
 
